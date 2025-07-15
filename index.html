@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <title>Splash + Main Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet" />
+  <style>
+    body, html {
+      margin: 0; padding: 0;
+      width: 100%; height: 100%;
+      font-family: 'Dancing Script', cursive;
+      background: linear-gradient(135deg, #ffe6f0, #ffd6e0);
+      user-select: none;
+      overflow: hidden;
+    }
+    /* Container for both screens */
+    #container {
+      width: 100%;
+      height: 100%;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+    /* Splash Screen Styles */
+    #splash {
+      font-size: 2rem;
+      color: #d63384;
+      text-shadow: 1px 1px #fff;
+    }
+    #splash button {
+      margin-top: 30px;
+      padding: 12px 30px;
+      font-size: 1.5rem;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+      transition: background-color 0.3s;
+    }
+    #splash button:hover {
+      background-color: #218838;
+    }
+
+    /* Typing text container */
+    #typingText {
+      margin-top: 40px;
+      font-size: 1.8rem;
+      color: #6f42c1;
+      min-height: 100px;
+      white-space: pre-wrap;
+      border: 2px solid #6f42c1;
+      border-radius: 10px;
+      padding: 15px;
+      width: 80%;
+      max-width: 600px;
+      font-weight: 600;
+      letter-spacing: 1.1px;
+      display: none;
+    }
+
+    /* Main page styles (hide initially) */
+    #mainPage {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      height: 100%;
+      width: 100%;
+    }
+    #mainPage h1 {
+      font-size: 2.2rem;
+      color: #d63384;
+      text-shadow: 2px 2px #fff;
+      margin: 0 20px 30px 20px;
+    }
+    #mainPage img {
+      border-radius: 15px;
+      width: 250px;
+    }
+    #buttonDiv {
+      margin-top: 30px;
+    }
+    #buttonDiv button {
+      padding: 12px 30px;
+      margin: 15px;
+      font-size: 1.6rem;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    }
+    #yesBtn {
+      background-color: #28a745;
+      color: white;
+    }
+    #noBtn {
+      background-color: #dc3545;
+      color: white;
+      position: absolute;
+    }
+    #responseText {
+      font-size: 1.8rem;
+      margin-top: 30px;
+      color: #6f42c1;
+      display: none;
+    }
+    #yesGif {
+      margin-top: 15px;
+      width: 300px;
+      height: 300px;
+      border-radius: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="container">
+    <!-- Splash Screen -->
+    <div id="splash">
+      <div>তুমি কি গেমটা খেলতে চাও? 🎮</div>
+      <button id="continueBtn">Ok Continue</button>
+    </div>
+
+    <!-- Typing effect text -->
+    <div id="typingText"></div>
+
+    <!-- Main Page -->
+    <div id="mainPage">
+      <h1 id="title">তুমি কি কথা দেবে — তুমি কি আমার সব কথা শুনবে, আমার প্রতিটা আবদার পূরণ করবে ? 🥺💖</h1>
+      <img id="mainGif" src="https://media1.giphy.com/media/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute animated illustration" />
+      <div id="buttonDiv">
+        <button id="yesBtn">হ্যাঁ 💘</button>
+        <button id="noBtn">না 🙅‍♀️</button>
+      </div>
+      <div id="responseText">
+        উম্ম্মাহ😘!! আমি জানতাম তুমি রাজি হবে 😍💖  
+        <br />
+        <img id="yesGif" src="https://media1.giphy.com/media/T86i6yDyOYz7J6dPhf/giphy.gif" alt="Dancing GIF" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Elements
+    const splash = document.getElementById('splash');
+    const continueBtn = document.getElementById('continueBtn');
+    const typingText = document.getElementById('typingText');
+    const mainPage = document.getElementById('mainPage');
+
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const responseText = document.getElementById("responseText");
+    const title = document.getElementById("title");
+    const mainGif = document.getElementById("mainGif");
+    const buttonDiv = document.getElementById("buttonDiv");
+
+    // Typing message for the intro
+    const introMessage = "ভালোভাবে বুঝে উত্তর দিবেন।";
+
+    // Typing effect function
+    function typeWriter(text, i, callback) {
+      if (i < text.length) {
+        typingText.textContent += text.charAt(i);
+        i++;
+        setTimeout(() => typeWriter(text, i, callback), 100);
+      } else {
+        callback();
+      }
+    }
+
+    // On clicking continue button: hide splash, show typing, start typing
+    continueBtn.addEventListener('click', () => {
+      splash.style.display = 'none';
+      typingText.style.display = 'block';
+      typingText.textContent = "";
+      typeWriter(introMessage, 0, () => {
+        // after typing finished wait 4 sec then show main page
+        setTimeout(() => {
+          typingText.style.display = 'none';
+          mainPage.style.display = 'flex';
+        }, 4000);
+      });
+    });
+
+    // Variables to track noBtn movement
+    let lastX = 0;
+    let lastY = 0;
+
+    // Main page submit response
+    function submitResponse(answer) {
+      if (answer === "Yes") {
+        title.style.display = 'none';
+        mainGif.style.display = 'none';
+        buttonDiv.style.display = 'none';
+        responseText.style.display = 'block';
+        localStorage.setItem('lastAnswer', answer);
+      }
+    }
+
+    yesBtn.addEventListener("click", () => submitResponse("Yes"));
+
+    // Check distance so noBtn is far enough from last position and from yesBtn
+    function isFarEnough(x, y) {
+      const dx = x - lastX;
+      const dy = y - lastY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      const yesRect = yesBtn.getBoundingClientRect();
+      const noWidth = noBtn.offsetWidth;
+      const noHeight = noBtn.offsetHeight;
+
+      const centerNoX = x + noWidth / 2;
+      const centerNoY = y + noHeight / 2;
+      const centerYesX = yesRect.left + yesRect.width / 2;
+      const centerYesY = yesRect.top + yesRect.height / 2;
+
+      const dYesX = centerNoX - centerYesX;
+      const dYesY = centerNoY - centerYesY;
+      const distanceYes = Math.sqrt(dYesX * dYesX + dYesY * dYesY);
+
+      return distance > 200 && distanceYes > 200;
+    }
+
+    // Move noBtn randomly far away
+    function moveNoBtn() {
+      const btnWidth = noBtn.offsetWidth;
+      const btnHeight = noBtn.offsetHeight;
+      const margin = 20;
+
+      const maxX = window.innerWidth - btnWidth - margin;
+      const maxY = window.innerHeight - btnHeight - margin;
+
+      let x, y;
+
+      do {
+        x = Math.floor(Math.random() * maxX);
+        y = Math.floor(Math.random() * maxY);
+      } while (!isFarEnough(x, y));
+
+      lastX = x;
+      lastY = y;
+
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
+    }
+
+    noBtn.addEventListener("mouseover", moveNoBtn);
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      moveNoBtn();
+    });
+    noBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      moveNoBtn();
+    });
+  </script>
+</body>
+</html>
