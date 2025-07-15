@@ -2,118 +2,111 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8" />
-  <title>Splash + Main Page</title>
+  <title>তুমি কি কথা দেবে? 💖</title>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet" />
   <style>
     body, html {
-      margin: 0; padding: 0;
-      width: 100%; height: 100%;
+      margin: 0;
+      padding: 0;
       font-family: 'Dancing Script', cursive;
       background: linear-gradient(135deg, #ffe6f0, #ffd6e0);
-      user-select: none;
+      height: 100vh;
       overflow: hidden;
-    }
-    /* Container for both screens */
-    #container {
-      width: 100%;
-      height: 100%;
-      display: flex; flex-direction: column;
-      justify-content: center; align-items: center;
+      user-select: none;
       text-align: center;
-      padding: 20px;
-    }
-    /* Splash Screen Styles */
-    #splash {
-      font-size: 2rem;
-      color: #d63384;
-      text-shadow: 1px 1px #fff;
-    }
-    #splash button {
-      margin-top: 30px;
-      padding: 12px 30px;
-      font-size: 1.5rem;
-      background-color: #28a745;
-      color: white;
-      border: none;
-      border-radius: 15px;
-      cursor: pointer;
-      box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-      transition: background-color 0.3s;
-    }
-    #splash button:hover {
-      background-color: #218838;
     }
 
-    /* Typing text container */
-    #typingText {
-      margin-top: 40px;
-      font-size: 1.8rem;
-      color: #6f42c1;
-      min-height: 100px;
-      white-space: pre-wrap;
-      border: 2px solid #6f42c1;
-      border-radius: 10px;
-      padding: 15px;
-      width: 80%;
-      max-width: 600px;
-      font-weight: 600;
-      letter-spacing: 1.1px;
-      display: none;
-    }
-
-    /* Main page styles (hide initially) */
-    #mainPage {
-      display: none;
+    #container {
+      display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      text-align: center;
       height: 100%;
-      width: 100%;
+      position: relative;
     }
-    #mainPage h1 {
-      font-size: 2.2rem;
+
+    #splash, #mainPage {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    #splash {
+      display: flex;
+    }
+
+    h1 {
+      font-size: 2rem;
       color: #d63384;
       text-shadow: 2px 2px #fff;
-      margin: 0 20px 30px 20px;
+      margin-bottom: 20px;
     }
-    #mainPage img {
-      border-radius: 15px;
-      width: 250px;
+
+    #typingText {
+      font-size: 1.5rem;
+      color: #6f42c1;
+      display: none;
+      border: 2px dashed #d63384;
+      padding: 10px;
+      border-radius: 10px;
+      margin-top: 20px;
+      min-width: 300px;
+      min-height: 40px;
+      white-space: nowrap;
+      overflow: hidden;
     }
-    #buttonDiv {
-      margin-top: 30px;
-    }
-    #buttonDiv button {
-      padding: 12px 30px;
-      margin: 15px;
-      font-size: 1.6rem;
+
+    button {
+      padding: 10px 25px;
+      font-size: 1.5rem;
       border: none;
       border-radius: 15px;
       cursor: pointer;
-      transition: 0.3s;
       box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+      height: 50px;
+      user-select: none;
+      transition: none !important;
+      white-space: nowrap;
     }
+
     #yesBtn {
       background-color: #28a745;
       color: white;
+      width: 120px;
+      flex-shrink: 0;
     }
+
     #noBtn {
       background-color: #dc3545;
       color: white;
-      position: absolute;
+      min-width: 120px;
+      flex-shrink: 0;
+      position: relative;
+      left: auto;
+      top: auto;
     }
+
+    #buttonDiv {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+
+    #mainGif, #yesGif, #noGif, #noFinalGif {
+      width: 250px;
+      border-radius: 15px;
+      margin-top: 10px;
+      user-select: none;
+    }
+
     #responseText {
       font-size: 1.8rem;
-      margin-top: 30px;
+      margin-top: 20px;
       color: #6f42c1;
       display: none;
-    }
-    #yesGif {
-      margin-top: 15px;
-      width: 300px;
-      height: 300px;
-      border-radius: 15px;
     }
   </style>
 </head>
@@ -122,47 +115,69 @@
   <div id="container">
     <!-- Splash Screen -->
     <div id="splash">
-      <div>তুমি কি গেমটা খেলতে চাও? 🎮</div>
-      <button id="continueBtn">Ok Continue</button>
+      <div>
+        <h1>তুমি কি গেমটা খেলতে চাও? 🎮</h1>
+        <button id="continueBtn">Ok Continue</button>
+      </div>
     </div>
 
-    <!-- Typing effect text -->
+    <!-- Typing Text -->
     <div id="typingText"></div>
 
     <!-- Main Page -->
     <div id="mainPage">
-      <h1 id="title">তুমি কি কথা দেবে — তুমি কি আমার সব কথা শুনবে, আমার প্রতিটা আবদার পূরণ করবে ? 🥺💖</h1>
-      <img id="mainGif" src="https://media1.giphy.com/media/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute animated illustration" />
+      <h1 id="title">তুমি কি কথা দেবে — তুমি কি আমার সব কথা শুনবে, আমার প্রতিটা আবদার পূরণ করবে? 🥺💖</h1>
+      <img id="mainGif" src="https://media1.giphy.com/media/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="main" />
+      <img id="noGif" src="" style="display:none;" alt="no reaction gif" />
+      <img id="noFinalGif" src="https://media.tenor.com/kQjsTRbRQoYAAAAi/quby.gif" style="display:none;" />
       <div id="buttonDiv">
         <button id="yesBtn">হ্যাঁ 💘</button>
         <button id="noBtn">না 🙅‍♀️</button>
       </div>
       <div id="responseText">
-        উম্ম্মাহ😘! আমি জানতাম তুমি রাজি হবে 😍💖  
-        <br />
-        <img id="yesGif" src="https://media1.giphy.com/media/T86i6yDyOYz7J6dPhf/giphy.gif" alt="Dancing GIF" />
+        উম্মাহ😘! আমি জানতাম তুমি রাজি হবে 😍💖<br />
+        <img id="yesGif" src="https://media.tenor.com/crtZc3wtiHgAAAAj/peach-goma-peach-and-goma.gif" />
       </div>
     </div>
   </div>
 
   <script>
-    // Elements
-    const splash = document.getElementById('splash');
     const continueBtn = document.getElementById('continueBtn');
+    const splash = document.getElementById('splash');
     const typingText = document.getElementById('typingText');
     const mainPage = document.getElementById('mainPage');
 
-    const yesBtn = document.getElementById("yesBtn");
-    const noBtn = document.getElementById("noBtn");
-    const responseText = document.getElementById("responseText");
     const title = document.getElementById("title");
     const mainGif = document.getElementById("mainGif");
-    const buttonDiv = document.getElementById("buttonDiv");
+    const noGif = document.getElementById("noGif");
+    const noFinalGif = document.getElementById("noFinalGif");
+    const yesGif = document.getElementById("yesGif");
+    const responseText = document.getElementById("responseText");
 
-    // Typing message for the intro
-    const introMessage = "ভালোভাবে বুঝে উত্তর দিবেন।";
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
 
-    // Typing effect function
+    const typingMessage = "ভালোভাবে বুঝে উত্তর দিবেন........";
+
+    const noMessages = [
+      "এইটা কি সিরিয়াসলি না বললা? 😭",
+      "তুমি একটু ভালো ভাবে ভাবো না প্লিজ 😢",
+      "তোমার জন্যই তো করলাম সবকিছু 😞",
+      "এমন না বলো না 😔",
+      "হেহে, আর পালাইও না! এবার হ্যাঁ বলো 😝"
+    ];
+
+    const noGifs = [
+      "https://media.tenor.com/Z6bK9kPeMGQAAAAi/peach-and.gif",
+      "https://media.tenor.com/p_VEcmrBsLMAAAAi/manja.gif",
+      "https://media.tenor.com/jpslGGdtiOwAAAAj/bear.gif",
+      "https://media.tenor.com/tzvzrz4famQAAAAi/couple-forgive-me.gif",
+      "https://media.tenor.com/A6uLMmoOjpQAAAAi/dare-aggie-dudu-bubu.gif"
+    ];
+
+    let noClickCount = 0;
+    let moveStarted = false;
+
     function typeWriter(text, i, callback) {
       if (i < text.length) {
         typingText.textContent += text.charAt(i);
@@ -173,90 +188,93 @@
       }
     }
 
-    // On clicking continue button: hide splash, show typing, start typing
-    continueBtn.addEventListener('click', () => {
+    continueBtn.onclick = () => {
       splash.style.display = 'none';
       typingText.style.display = 'block';
-      typingText.textContent = "";
-      typeWriter(introMessage, 0, () => {
-        // after typing finished wait 4 sec then show main page
+      typingText.textContent = '';
+      typeWriter(typingMessage, 0, () => {
         setTimeout(() => {
           typingText.style.display = 'none';
           mainPage.style.display = 'flex';
-        }, 4000);
+        }, 2000);
       });
-    });
+    };
 
-    // Variables to track noBtn movement
-    let lastX = 0;
-    let lastY = 0;
+    yesBtn.onclick = () => {
+      // Yes এ ক্লিক করলে No বাটন লুকাবে, মুভ বন্ধ করবে, রেসপন্স দেখাবে
+      title.style.display = "none";
+      document.getElementById("buttonDiv").style.display = "none";
+      mainGif.style.display = "none";
+      noGif.style.display = "none";
+      noFinalGif.style.display = "none";
+      responseText.style.display = "block";
+      noBtn.style.display = "none";
+      moveStarted = false;
+    };
 
-    // Main page submit response
-    function submitResponse(answer) {
-      if (answer === "Yes") {
-        title.style.display = 'none';
+    function showNextNoReaction() {
+      if (noClickCount < noMessages.length) {
+        // সিরিয়াল মেসেজ ও গিফ দেখাবে
+        title.style.display = "block";
+        title.textContent = noMessages[noClickCount];
+        noGif.src = noGifs[noClickCount];
         mainGif.style.display = 'none';
-        buttonDiv.style.display = 'none';
-        responseText.style.display = 'block';
-        localStorage.setItem('lastAnswer', answer);
+        noGif.style.display = 'block';
+        noFinalGif.style.display = 'none';
+        noClickCount++;
+      } else if (!moveStarted) {
+        // সব মেসেজ শেষ হলে মুভিং মোড শুরু
+        moveStarted = true;
+        title.textContent = "এখন আর পালানোর পথ নাই.. বল হ্যাঁ 💘🫵";
+         noGif.style.display = "none";
+        noFinalGif.style.display = "block";
+        noBtn.textContent = "এই যে No বলো 😘";
+        noBtn.style.position = "fixed";
       }
     }
 
-    yesBtn.addEventListener("click", () => submitResponse("Yes"));
-
-    // Check distance so noBtn is far enough from last position and from yesBtn
-    function isFarEnough(x, y) {
-      const dx = x - lastX;
-      const dy = y - lastY;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-
-      const yesRect = yesBtn.getBoundingClientRect();
-      const noWidth = noBtn.offsetWidth;
-      const noHeight = noBtn.offsetHeight;
-
-      const centerNoX = x + noWidth / 2;
-      const centerNoY = y + noHeight / 2;
-      const centerYesX = yesRect.left + yesRect.width / 2;
-      const centerYesY = yesRect.top + yesRect.height / 2;
-
-      const dYesX = centerNoX - centerYesX;
-      const dYesY = centerNoY - centerYesY;
-      const distanceYes = Math.sqrt(dYesX * dYesX + dYesY * dYesY);
-
-      return distance > 200 && distanceYes > 200;
-    }
-
-    // Move noBtn randomly far away
     function moveNoBtn() {
+      if (!moveStarted) return;
+
       const btnWidth = noBtn.offsetWidth;
       const btnHeight = noBtn.offsetHeight;
-      const margin = 20;
 
-      const maxX = window.innerWidth - btnWidth - margin;
-      const maxY = window.innerHeight - btnHeight - margin;
+      const yesRect = yesBtn.getBoundingClientRect();
+      const yesCenterX = yesRect.left + yesRect.width / 2;
+      const yesCenterY = yesRect.top + yesRect.height / 2;
 
-      let x, y;
+      let x, y, distance;
+      const padding = 20;
 
       do {
-        x = Math.floor(Math.random() * maxX);
-        y = Math.floor(Math.random() * maxY);
-      } while (!isFarEnough(x, y));
+        x = Math.floor(Math.random() * (window.innerWidth - btnWidth - padding * 2)) + padding;
+        y = Math.floor(Math.random() * (window.innerHeight - btnHeight - padding * 2)) + padding;
 
-      lastX = x;
-      lastY = y;
+        const noCenterX = x + btnWidth / 2;
+        const noCenterY = y + btnHeight / 2;
+
+        distance = Math.sqrt(Math.pow(noCenterX - yesCenterX, 2) + Math.pow(noCenterY - yesCenterY, 2));
+      } while (distance < 300);
 
       noBtn.style.left = `${x}px`;
       noBtn.style.top = `${y}px`;
     }
 
-    noBtn.addEventListener("mouseover", moveNoBtn);
-    noBtn.addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      moveNoBtn();
-    });
     noBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      moveNoBtn();
+      if (!moveStarted) {
+        showNextNoReaction();
+      } else {
+        moveNoBtn();
+      }
+    });
+
+    noBtn.addEventListener("mouseover", () => {
+      if (moveStarted) moveNoBtn();
+    });
+
+    noBtn.addEventListener("touchstart", () => {
+      if (moveStarted) moveNoBtn();
     });
   </script>
 </body>
